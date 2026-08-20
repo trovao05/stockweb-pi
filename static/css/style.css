@@ -116,3 +116,44 @@ a:focus {
 .alto-contraste th {
     background-color: #222;
 }
+<section class="dashboard">
+
+    <div class="card-dashboard">
+        <span class="icone-dashboard">📦</span>
+        <h3>Produtos cadastrados</h3>
+        <p>{{ total_produtos }}</p>
+    </div>
+
+    <div class="card-dashboard">
+        <span class="icone-dashboard">📊</span>
+        <h3>Unidades em estoque</h3>
+        <p>{{ total_unidades }}</p>
+    </div>
+
+    <div class="card-dashboard">
+        <span class="icone-dashboard">💰</span>
+        <h3>Valor do estoque</h3>
+        <p>
+            R$ {{ "%.2f"|format(valor_estoque) }}
+        </p>
+    </div>
+
+    <div class="card-dashboard">
+        <span class="icone-dashboard">⚠️</span>
+        <h3>Estoque baixo</h3>
+        <p>{{ estoque_baixo }}</p>
+    </div>
+
+</section>
+
+<hr>
+.grafico-container {
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.grafico-container canvas {
+    max-height: 400px;
+}
