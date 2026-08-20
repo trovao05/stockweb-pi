@@ -126,7 +126,7 @@ def excluir(id):
 
     return redirect("/")
 
+criar_tabela()
 
 if __name__ == "__main__":
-    criar_tabela()
     app.run(debug=True)
