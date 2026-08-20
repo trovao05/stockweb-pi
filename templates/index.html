@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockWeb</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+    <a href="#conteudo" class="pular-conteudo">
+    Pular para o conteúdo principal
+</a>
+
+    <header>
+        <h1>StockWeb</h1>
+        <p>Sistema de Gerenciamento de Estoque</p>
+    </header>
+
+    <main id="conteudo">
+
+        <h2>Cadastrar Produto</h2>
+
+        <form action="/cadastrar" method="POST">
+
+            <label for="nome">Nome do produto</label>
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                required
+            >
+
+            <label for="categoria">Categoria</label>
+            <input
+                type="text"
+                id="categoria"
+                name="categoria"
+                required
+            >
+
+            <label for="quantidade">Quantidade</label>
+            <input
+                type="number"
+                id="quantidade"
+                name="quantidade"
+                min="0"
+                required
+            >
+            <label for="estoque_minimo">Estoque mínimo</label>
+
+<input
+    type="number"
+    id="estoque_minimo"
+    name="estoque_minimo"
+    min="0"
+    required
+>
+
+            <label for="preco">Preço</label>
+            <input
+                type="number"
+                id="preco"
+                name="preco"
+                step="0.01"
+                min="0"
+                required
+            >
+
+            <button type="submit">
+                Cadastrar Produto
+            </button>
+
+        </form>
+
+        <hr>
+
+        <h2>Produtos cadastrados</h2>
+
+        {% if produtos %}
+
+        <table>
+
+            <th>Estoque Mínimo</th>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Quantidade</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for produto in produtos %}
+
+                <tr>
+                    <td>{{ produto["id"] }}</td>
+                    <td>{{ produto["nome"] }}</td>
+                    <td>{{ produto["categoria"] }}</td>
+                    <td>
+    {{ produto["quantidade"] }}
+
+    {% if produto["quantidade"] <= produto["estoque_minimo"] %}
+        <span class="alerta-estoque">⚠ Estoque baixo</span>
+    {% endif %}
+</td>
+                    <td>{{ produto["estoque_minimo"] }}</td>
+
+                    <td>
+                        R$ {{ "%.2f"|format(produto["preco"]) }}
+                    </td>
+                    <td>
+    <a href="/editar/{{ produto['id'] }}">Editar</a>
+
+    <a
+        href="/excluir/{{ produto['id'] }}"
+        onclick="return confirmarExclusao()"
+    >
+        Excluir
+    </a>
+</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>Nenhum produto cadastrado ainda.</p>
+
+        {% endif %}
+
+        <hr>
+
+<section>
+    <h2>Consulta de Endereço</h2>
+
+    <p>Digite um CEP para consultar o endereço:</p>
+
+    <label for="cep">CEP</label>
+    <input
+        type="text"
+        id="cep"
+        maxlength="9"
+        placeholder="Ex: 18000-000"
+    >
+
+    <button type="button" onclick="consultarCEP()">
+        Consultar CEP
+    </button>
+
+    <div id="resultado-cep" aria-live="polite"></div>
+</section>
+
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}">
+    </script>
+
+</body>
+
+</html>
