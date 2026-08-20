@@ -76,34 +76,38 @@ def inicio():
 
     # Total de produtos cadastrados
     cursor.execute("""
-        SELECT COUNT(*)
+        SELECT COUNT(*) AS total_produtos
         FROM produtos
     """)
-    total_produtos = cursor.fetchone()[0]
+    resultado = cursor.fetchone()
+    total_produtos = resultado["total_produtos"]
 
-    # Total de unidades
+    # Total de unidades em estoque
     cursor.execute("""
-        SELECT COALESCE(SUM(quantidade), 0)
+        SELECT COALESCE(SUM(quantidade), 0) AS total_unidades
         FROM produtos
     """)
-    total_unidades = cursor.fetchone()[0]
+    resultado = cursor.fetchone()
+    total_unidades = resultado["total_unidades"]
 
-    # Valor total do estoque
+    # Valor financeiro total do estoque
     cursor.execute("""
-        SELECT COALESCE(SUM(quantidade * preco), 0)
+        SELECT COALESCE(SUM(quantidade * preco), 0) AS valor_estoque
         FROM produtos
     """)
-    valor_estoque = cursor.fetchone()[0]
+    resultado = cursor.fetchone()
+    valor_estoque = resultado["valor_estoque"]
 
     # Produtos com estoque baixo
     cursor.execute("""
-        SELECT COUNT(*)
+        SELECT COUNT(*) AS estoque_baixo
         FROM produtos
         WHERE quantidade <= estoque_minimo
     """)
-    estoque_baixo = cursor.fetchone()[0]
+    resultado = cursor.fetchone()
+    estoque_baixo = resultado["estoque_baixo"]
 
-    # Produtos por categoria
+    # Quantidade de produtos por categoria
     cursor.execute("""
         SELECT categoria, COUNT(*) AS quantidade
         FROM produtos
