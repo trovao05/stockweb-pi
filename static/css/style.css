@@ -79,3 +79,40 @@ a:focus {
     display: block;
     padding: 10px;
 }
+.acessibilidade {
+    max-width: 900px;
+    margin: 20px auto;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.acessibilidade button {
+    padding: 8px 12px;
+}
+
+.alto-contraste {
+    background-color: black;
+    color: white;
+}
+
+.alto-contraste main {
+    background-color: black;
+    color: white;
+}
+
+.alto-contraste input {
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+}
+
+.alto-contraste table,
+.alto-contraste th,
+.alto-contraste td {
+    border-color: white;
+}
+
+.alto-contraste th {
+    background-color: #222;
+}
