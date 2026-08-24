@@ -157,3 +157,30 @@ a:focus {
 .grafico-container canvas {
     max-height: 400px;
 }
+
+.campo-com-voz {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.campo-com-voz input {
+    flex: 1;
+}
+
+.botao-voz {
+    width: 45px;
+    min-width: 45px;
+    margin-top: 0;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.ouvindo {
+    outline: 3px solid;
+    outline-offset: 2px;
+}
+
+input::placeholder {
+    font-size: 14px;
+}

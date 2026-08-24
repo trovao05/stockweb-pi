@@ -65,3 +65,73 @@ function diminuirFonte() {
 function alternarContraste() {
     document.body.classList.toggle("alto-contraste");
 }
+
+function digitarPorVoz(campoId) {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+
+        alert(
+            "O reconhecimento de voz não é compatível com este navegador. " +
+            "Tente utilizar Google Chrome ou Microsoft Edge."
+        );
+
+        return;
+    }
+
+    const reconhecimento = new SpeechRecognition();
+
+    reconhecimento.lang = "pt-BR";
+    reconhecimento.interimResults = false;
+    reconhecimento.maxAlternatives = 1;
+
+    const campo = document.getElementById(campoId);
+
+    reconhecimento.onstart = function () {
+
+        campo.classList.add("ouvindo");
+
+        campo.setAttribute(
+            "placeholder",
+            "🎤 Ouvindo..."
+        );
+    };
+
+    reconhecimento.onresult = function (evento) {
+
+        let texto =
+            evento.results[0][0].transcript.trim();
+
+        if (
+            campoId === "quantidade" ||
+            campoId === "estoque_minimo" ||
+            campoId === "preco"
+        ) {
+
+            texto = texto
+                .replace(",", ".")
+                .replace(/[^\d.]/g, "");
+        }
+
+        campo.value = texto;
+    };
+
+    reconhecimento.onerror = function () {
+
+        alert(
+            "Não foi possível reconhecer a fala. Tente novamente."
+        );
+    };
+
+    reconhecimento.onend = function () {
+
+        campo.classList.remove("ouvindo");
+
+        campo.removeAttribute("placeholder");
+    };
+
+    reconhecimento.start();
+}
