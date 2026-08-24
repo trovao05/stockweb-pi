@@ -412,72 +412,62 @@
 
     <!-- CHART.JS -->
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/chart.js">
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
 
-        const categorias =
-            {{ categorias | tojson }};
+        const categorias = {{ categorias | tojson }};
+        const quantidades = {{ quantidades_categoria | tojson }};
 
-        const quantidades =
-            {{ quantidades_categoria | tojson }};
+        const canvas = document.getElementById("graficoCategorias");
 
-        const contexto =
-            document.getElementById(
-                "graficoCategorias"
-            );
+        if (!canvas) {
+            console.error("Área do gráfico não encontrada.");
+            return;
+        }
 
-        new Chart(
-            contexto,
-            {
-                type: "bar",
+        if (typeof Chart === "undefined") {
+            console.error("Chart.js não foi carregado.");
+            return;
+        }
 
-                data: {
+        new Chart(canvas, {
+            type: "bar",
 
-                    labels: categorias,
+            data: {
+                labels: categorias,
 
-                    datasets: [
-                        {
-                            label:
-                                "Quantidade de produtos",
+                datasets: [{
+                    label: "Quantidade de produtos",
+                    data: quantidades
+                }]
+            },
 
-                            data:
-                                quantidades
+            options: {
+                responsive: true,
+
+                scales: {
+                    y: {
+                        beginAtZero: true,
+
+                        ticks: {
+                            stepSize: 1,
+                            precision: 0
                         }
-                    ]
+                    }
                 },
 
-                options: {
-
-    responsive: true,
-
-    scales: {
-
-        y: {
-
-            beginAtZero: true,
-
-            ticks: {
-
-                stepSize: 1,
-
-                precision: 0
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
             }
-        }
-    },
+        });
 
-    plugins: {
-
-        legend: {
-            display: false
-        }
-    }
-}
-        );
-
-    </script>
+    });
+</script>
 
 </body>
 
