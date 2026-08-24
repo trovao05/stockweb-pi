@@ -162,26 +162,48 @@
 
 </div>
 
-            <label for="categoria">
+            <label for="categoria_existente">
     Categoria
 </label>
 
-<div class="campo-com-voz">
+<select
+    id="categoria_existente"
+    onchange="alterarTipoCategoria()"
+>
+    <option value="">
+        Selecione uma categoria existente
+    </option>
+
+    {% for categoria in categorias_existentes %}
+
+        <option value="{{ categoria }}">
+            {{ categoria }}
+        </option>
+
+    {% endfor %}
+
+    <option value="__nova__">
+        ➕ Digitar nova categoria
+    </option>
+</select>
+
+<div
+    id="area_nova_categoria"
+    class="campo-com-voz"
+    style="display: none;"
+>
 
     <input
         type="text"
-        id="categoria"
-        name="categoria"
-        list="lista-categorias"
-        placeholder="Digite ou escolha uma categoria. Ex: Informática, Eletrônicos..."
+        id="categoria_manual"
+        placeholder="Digite a nova categoria. Ex: Informática, Eletrônicos..."
         autocomplete="off"
-        required
     >
 
     <button
         type="button"
         class="botao-voz"
-        onclick="digitarPorVoz('categoria')"
+        onclick="digitarPorVoz('categoria_manual')"
         aria-label="Preencher categoria por voz"
         title="Preencher por voz"
     >
@@ -190,15 +212,11 @@
 
 </div>
 
-<datalist id="lista-categorias">
-
-    {% for categoria in categorias_existentes %}
-
-        <option value="{{ categoria }}">
-
-    {% endfor %}
-
-</datalist>
+<input
+    type="hidden"
+    id="categoria"
+    name="categoria"
+>
 
             <label for="quantidade">
     Quantidade

@@ -135,3 +135,59 @@ function digitarPorVoz(campoId) {
 
     reconhecimento.start();
 }
+
+<label for="categoria_existente">
+    Categoria
+</label>
+
+<select
+    id="categoria_existente"
+    onchange="alterarTipoCategoria()"
+>
+    <option value="">
+        Selecione uma categoria existente
+    </option>
+
+    {% for categoria in categorias_existentes %}
+
+        <option value="{{ categoria }}">
+            {{ categoria }}
+        </option>
+
+    {% endfor %}
+
+    <option value="__nova__">
+        ➕ Digitar nova categoria
+    </option>
+</select>
+
+<div
+    id="area_nova_categoria"
+    class="campo-com-voz"
+    style="display: none;"
+>
+
+    <input
+        type="text"
+        id="categoria_manual"
+        placeholder="Digite a nova categoria. Ex: Informática, Eletrônicos..."
+        autocomplete="off"
+    >
+
+    <button
+        type="button"
+        class="botao-voz"
+        onclick="digitarPorVoz('categoria_manual')"
+        aria-label="Preencher categoria por voz"
+        title="Preencher por voz"
+    >
+        🎤
+    </button>
+
+</div>
+
+<input
+    type="hidden"
+    id="categoria"
+    name="categoria"
+></input>
