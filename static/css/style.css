@@ -184,3 +184,11 @@ a:focus {
 input::placeholder {
     font-size: 14px;
 }
+/* Gráfico de categorias: funciona sem conexão com a internet. */
+.grafico-barras { width: 100%; margin: 20px 0; }
+.grafico-linha { display: grid; grid-template-columns: minmax(100px, 180px) minmax(0, 1fr) 45px; align-items: center; gap: 12px; margin: 14px 0; }
+.grafico-rotulo { overflow-wrap: anywhere; font-weight: 600; }
+.grafico-trilho { height: 28px; border-radius: 5px; background: #e8edf4; overflow: hidden; }
+.grafico-barra { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #1769aa, #37a0e6); min-width: 2px; }
+.grafico-valor { text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) { .grafico-linha { grid-template-columns: minmax(75px, 110px) minmax(0, 1fr) 30px; gap: 7px; } }

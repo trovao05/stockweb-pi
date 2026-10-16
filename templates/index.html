@@ -122,7 +122,22 @@
                 Produtos por Categoria
             </h2>
 
-            <canvas id="graficoCategorias"></canvas>
+            <div class="grafico-barras" role="img" aria-label="Gráfico de quantidade de produtos por categoria">
+                {% if categorias %}
+                    {% set maior = quantidades_categoria|max %}
+                    {% for categoria in categorias %}
+                    <div class="grafico-linha">
+                        <span class="grafico-rotulo">{{ categoria }}</span>
+                        <div class="grafico-trilho">
+                            <div class="grafico-barra" style="width: {{ (quantidades_categoria[loop.index0] / maior * 100) | round(2) }}%"></div>
+                        </div>
+                        <strong class="grafico-valor">{{ quantidades_categoria[loop.index0] }}</strong>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Nenhum produto cadastrado para exibir no gráfico.</p>
+                {% endif %}
+            </div>
 
         </section>
 
@@ -410,63 +425,48 @@
         src="{{ url_for('static', filename='js/script.js') }}">
     </script>
 
-    <!-- CHART.JS -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+let formularioAlterado = false;
 
-        const categorias = {{ categorias | tojson }};
-        const quantidades = {{ quantidades_categoria | tojson }};
-
-        const canvas = document.getElementById("graficoCategorias");
-
-        if (!canvas) {
-            console.error("Área do gráfico não encontrada.");
-            return;
-        }
-
-        if (typeof Chart === "undefined") {
-            console.error("Chart.js não foi carregado.");
-            return;
-        }
-
-        new Chart(canvas, {
-            type: "bar",
-
-            data: {
-                labels: categorias,
-
-                datasets: [{
-                    label: "Quantidade de produtos",
-                    data: quantidades
-                }]
-            },
-
-            options: {
-                responsive: true,
-
-                scales: {
-                    y: {
-                        beginAtZero: true,
-
-                        ticks: {
-                            stepSize: 1,
-                            precision: 0
-                        }
-                    }
-                },
-
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-
+document.querySelectorAll("input, select, textarea").forEach(campo => {
+    campo.addEventListener("input", () => {
+        formularioAlterado = true;
     });
+    campo.addEventListener("change", () => {
+        formularioAlterado = true;
+    });
+});
+
+let ultimaVersao = null;
+
+async function verificarEstoque() {
+    if (document.hidden || formularioAlterado) return;
+
+    try {
+        const resposta = await fetch("/", { cache: "no-store" });
+        if (!resposta.ok) return;
+
+        const html = await resposta.text();
+        const documento = new DOMParser()
+            .parseFromString(html, "text/html");
+
+        const conteudo = documento.querySelector("main");
+        if (!conteudo) return;
+
+        const versao = conteudo.innerHTML;
+
+        if (ultimaVersao === null) {
+            ultimaVersao = versao;
+        } else if (versao !== ultimaVersao) {
+            window.location.reload();
+        }
+    } catch (erro) {
+        console.log("Aguardando conexão com o servidor...");
+    }
+}
+
+verificarEstoque();
+setInterval(verificarEstoque, 3000);
 </script>
 
 </body>
