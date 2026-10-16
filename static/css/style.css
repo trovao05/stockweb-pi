@@ -192,3 +192,23 @@ input::placeholder {
 .grafico-barra { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #1769aa, #37a0e6); min-width: 2px; }
 .grafico-valor { text-align: right; font-variant-numeric: tabular-nums; }
 @media (max-width: 600px) { .grafico-linha { grid-template-columns: minmax(75px, 110px) minmax(0, 1fr) 30px; gap: 7px; } }
+
+/* Layout horizontal responsivo StockWeb */
+*{box-sizing:border-box} body{background:#f1f5f9;color:#172b4d;line-height:1.45}
+header{background:linear-gradient(120deg,#102b4c,#1769aa);padding:14px 32px 24px}header h1{font-size:30px;margin:0}header p{margin:4px 0 0;opacity:.9}
+.acessibilidade{max-width:1480px;margin:0 auto 8px}.acessibilidade button{background:#fff;color:#16385c;border:0;border-radius:6px;font-size:13px;margin:0;padding:6px 10px}
+main{max-width:1480px;width:calc(100% - 48px);margin:24px auto;background:transparent;padding:0;border-radius:0}
+.dashboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:18px}
+.card-dashboard{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 20px;box-shadow:0 3px 12px #0f29440b;min-width:0}
+.icone-dashboard{font-size:23px}.card-dashboard h3{font-size:13px;color:#64748b;font-weight:600;margin:8px 0 4px}.card-dashboard p{font-size:26px;font-weight:800;color:#143e67;margin:0;overflow-wrap:anywhere}
+.painel-duplo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px;align-items:stretch;margin-bottom:18px}
+.painel-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:22px;box-shadow:0 3px 12px #0f29440b;min-width:0}
+.painel-card h2{font-size:19px;color:#16385c;margin:0 0 18px}.grafico-barras{margin:10px 0}.grafico-linha{grid-template-columns:minmax(90px,145px) minmax(0,1fr) 30px;margin:17px 0;gap:10px;font-size:13px}.grafico-trilho{height:22px}
+.form-cadastro{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;align-items:end}.form-cadastro label{font-weight:600;font-size:12px;color:#475569;margin-top:3px}.form-cadastro input{width:100%;min-width:0;height:39px;padding:8px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px}.form-cadastro .campo-com-voz{min-width:0}.form-cadastro .botao-voz{height:39px;min-width:40px;width:40px;border:1px solid #cbd5e1;border-radius:6px;background:#f8fafc;padding:5px;margin:0}.form-cadastro>button[type=submit]{grid-column:1/-1;background:#1769aa;color:white;border:0;border-radius:7px;font-weight:700;padding:11px;margin-top:10px}
+/* Labels e controles preservam a ordem de leitura e tabulacao */
+.form-cadastro label[for=nome],.form-cadastro label[for=categoria],.form-cadastro label[for=quantidade]{grid-column:1/-1}.form-cadastro .campo-com-voz{grid-column:1/-1}.form-cadastro label[for=estoque_minimo],.form-cadastro label[for=preco]{grid-column:1/-1}
+.produtos{margin-bottom:18px}.tabela-rolagem{overflow-x:auto}table{margin:0;font-size:13px}th,td{padding:11px 12px;border:0;border-bottom:1px solid #e2e8f0}th{background:#eff6fc;color:#31516f;white-space:nowrap}tbody tr:hover{background:#f8fafc}td a{display:inline-block;margin-right:9px;color:#1769aa;font-weight:600}.alerta-estoque{color:#b45309;font-size:11px}
+.cep-card{padding:18px 22px}.cep-card h2{margin-bottom:8px}.cep-card p{font-size:13px;margin:0 0 8px}.cep-card input{border:1px solid #cbd5e1;border-radius:6px;padding:10px;max-width:230px}.cep-card button{border:0;background:#1769aa;color:#fff;border-radius:6px;padding:11px 14px;font-size:13px}
+main>hr{display:none}button:hover{filter:brightness(.95)}.alto-contraste .painel-card,.alto-contraste .card-dashboard{background:#000;color:#fff;border-color:#fff}.alto-contraste .card-dashboard p,.alto-contraste .painel-card h2{color:#fff}.alto-contraste th{background:#222;color:#fff}
+@media(max-width:950px){.dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}.painel-duplo{grid-template-columns:1fr}}
+@media(max-width:580px){main{width:calc(100% - 24px);margin:12px auto}.dashboard{gap:9px}.card-dashboard{padding:12px}.card-dashboard p{font-size:20px}.card-dashboard h3{font-size:11px}.painel-card{padding:14px}.grafico-linha{grid-template-columns:90px minmax(0,1fr) 25px;gap:6px}.form-cadastro{grid-template-columns:1fr}header{padding:12px}.acessibilidade{flex-wrap:wrap}}

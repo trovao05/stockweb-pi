@@ -91,7 +91,7 @@
                 <h3>Valor do estoque</h3>
 
                 <p>
-                    R$ {{ "%.2f"|format(valor_estoque) }}
+                    R$ {{ "{:,.2f}".format(valor_estoque | float).replace(",", "X").replace(".", ",").replace("X", ".") }}
                 </p>
 
             </div>
@@ -344,7 +344,7 @@
                     </td>
 
                     <td>
-                        R$ {{ "%.2f"|format(produto["preco"]) }}
+                        R$ {{ "{:,.2f}".format(produto.preco | float).replace(",", "X").replace(".", ",").replace("X", ".") }}
                     </td>
 
                     <td>
