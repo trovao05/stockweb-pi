@@ -283,7 +283,14 @@
 
         {% if produtos %}
 
-        <table>
+        <div class="pesquisa-produtos">
+            <label for="pesquisa-produtos">🔎 Pesquisar produtos</label>
+            <input id="pesquisa-produtos" type="search" placeholder="Digite o nome ou a categoria do produto..." autocomplete="off" aria-controls="tabela-produtos" aria-describedby="resultado-pesquisa">
+            <p id="resultado-pesquisa" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="tabela-rolagem">
+        <table id="tabela-produtos">
 
             <thead>
 
@@ -311,7 +318,7 @@
 
                 {% for produto in produtos %}
 
-                <tr>
+                <tr class="linha-produto" data-nome="{{ produto['nome'] | e }}" data-categoria="{{ produto['categoria'] | e }}">
 
                     <td>
                         {{ produto["id"] }}
@@ -369,6 +376,8 @@
             </tbody>
 
         </table>
+        </div>
+        <p id="nenhum-resultado-pesquisa" class="sem-resultado-pesquisa" hidden>Nenhum produto encontrado para esta pesquisa.</p>
 
         {% else %}
 

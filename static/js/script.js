@@ -135,3 +135,30 @@ function digitarPorVoz(campoId) {
 
     reconhecimento.start();
 }
+
+// Pesquisa local e instantânea na lista de produtos, sem alterar o banco de dados.
+document.addEventListener("DOMContentLoaded", function () {
+    const pesquisa = document.getElementById("pesquisa-produtos");
+    if (!pesquisa) return;
+
+    const linhas = Array.from(document.querySelectorAll("#tabela-produtos .linha-produto"));
+    const mensagem = document.getElementById("nenhum-resultado-pesquisa");
+    const status = document.getElementById("resultado-pesquisa");
+    const normalizar = (texto) => texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR").trim();
+
+    function filtrarProdutos() {
+        const termo = normalizar(pesquisa.value);
+        let encontrados = 0;
+        linhas.forEach((linha) => {
+            const conteudo = normalizar((linha.dataset.nome || "") + " " + (linha.dataset.categoria || ""));
+            const corresponde = conteudo.includes(termo);
+            linha.hidden = !corresponde;
+            if (corresponde) encontrados++;
+        });
+        mensagem.hidden = encontrados !== 0;
+        status.textContent = termo ? `${encontrados} produto(s) encontrado(s).` : `${linhas.length} produto(s) na lista.`;
+    }
+
+    pesquisa.addEventListener("input", filtrarProdutos);
+    filtrarProdutos();
+});
